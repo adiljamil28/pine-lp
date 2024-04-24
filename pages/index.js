@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import 'swiper/css/effect-coverflow';
-
 import Header from "./components/header";
 import Hero from "./components/hero";
 import HeroForm from "./components/herform";
@@ -16,8 +15,9 @@ import { A11y } from 'swiper/modules';
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-library.add(faArrowLeft, faArrowRight);
 
+library.add(faArrowLeft, faArrowRight);
+import { animate, motion, useInView, useMotionValue, useTransform ,nodeRef,rounded} from "framer-motion";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -25,6 +25,9 @@ export default function Home()  {
 
   const swiperRef = useRef();
   const swiperRef2 = useRef();
+
+
+  
 
   const settings = {
     // slidesPerView: 3,
@@ -59,9 +62,26 @@ export default function Home()  {
     }
 }
 
+
+function Counter({ from, to, val }) {
+    
+  const count = useMotionValue(from);
+  const rounded = useTransform(count, (latest) => {
+      return Math.round(latest) + val;
+  });
+  const nodeRef = useRef(null);
+  const inView = useInView(nodeRef);
+
+  useEffect(() => {
+      if (inView) {
+          animate(count, to, { duration: 2 });
+      }
+  }, [count, inView, to]);
+  return <motion.p className="font-majallab text-black" ref={nodeRef}>{rounded}</motion.p>
+}
+
   return (
     <main>
-  
     <Header />
     <Hero Component={HeroForm} />
 
@@ -89,19 +109,20 @@ export default function Home()  {
         '@0.00': {
           slidesPerView: 1,
           spaceBetween: 10,
+          
           navigation:{
             enabled: false,
           }, 
           pagination:false,
           navigation: true,
         }, '@1.00': {
-          slidesPerView: 3,
+          slidesPerView: 5,
           spaceBetween: 15,
         }
       }}
       
       >
-            <SwiperSlide className="text-center"> 
+            <SwiperSlide className="mx-auto"> 
             <div>
               <a href="https://goo.gl/maps/D6kJBoXBJYwcZWkP7"><Image alt="LOGO" src={'/images/s1.png'} width={150} height={60}/></a>
               </div>
@@ -254,8 +275,8 @@ export default function Home()  {
               </SwiperSlide>
               
           </Swiper>
-          <div class="bk-sil prev" onClick={() => swiperRef.current?.slidePrev()}><FontAwesomeIcon icon={faArrowLeft} /></div>
-          <div class="bk-sil next" onClick={() => swiperRef.current?.slideNext()}><FontAwesomeIcon icon={faArrowRight} /></div>
+          {/* <div class="bk-sil prev" onClick={() => swiperRef.current?.slidePrev()}><FontAwesomeIcon icon={faArrowLeft} /></div>
+          <div class="bk-sil next" onClick={() => swiperRef.current?.slideNext()}><FontAwesomeIcon icon={faArrowRight} /></div> */}
           </div>
         </div>
 
@@ -842,22 +863,22 @@ export default function Home()  {
         {/* <div className="grid grid-cols-4 gap-4"></div> */}
         <div className="mt-6 grid grid-cols-1 px-6 gap-y-10 sm:grid-cols-2 mx-5 lg:grid-cols-4 xl:gap-x-8">
         <div className="conter-box rounded-lg bg-white py-8 px-5 text-center content-center">
-            <h2>15+</h2>
+            <h2><Counter from={0} to={15} val={"+"} /></h2>
             <span className="font-majallab">Years of industry experience</span>
           </div>
 
           <div className="conter-box rounded-lg bg-white py-8 px-5 text-center content-center">
-            <h2>500+</h2>
+          <h2><Counter from={0} to={500} val={"+"} /></h2>
             <span className="font-majallab">Published Books</span>
           </div>
 
           <div className="conter-box rounded-lg bg-white py-8 px-5 text-center content-center">
-            <h2>100+</h2>
+          <h2><Counter from={0} to={100} val={"+"} /></h2>
             <span className="font-majallab">Ongoing Clients</span>
           </div>
 
           <div className="conter-box rounded-lg bg-white py-8 px-5 text-center content-center">
-            <h2>99+</h2>
+          <h2><Counter from={0} to={99} val={"+"} /></h2>
             <span className="font-majallab">Client Satisfaction Rate</span>
           </div>
         </div>
@@ -896,6 +917,21 @@ export default function Home()  {
         modules={[EffectCoverflow, Pagination]}
         
         className="mySwiper"
+
+        breakpoints={{
+          '@0.00': {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            navigation:{
+              enabled: false,
+            }, 
+            pagination:false,
+            navigation: true,
+          }, '@1.00': {
+            slidesPerView: 3,
+            spaceBetween: 5,
+          }
+        }}
       >
 
         
@@ -1004,78 +1040,33 @@ export default function Home()  {
 
               <div className="relative mb-3"> 
                   <input type="text" 
-                        className="pl-10 pr-4 py-2 border rounded-lg w-full" 
-                        placeholder="Enter your email" /> 
-                  <div className="absolute inset-y-0 left-0 pl-3  
-                              flex items-center  
-                              pointer-events-none"> 
-                      <svg className="h-5 w-5 text-gray-400" 
-                          fill="none" 
-                          stroke="currentColor"> 
-                          <path stroke-linecap="round" 
-                                stroke-linejoin="round" 
-                                stroke-width="2"
-                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"> 
-                            </path> 
-                      </svg> 
-                  </div> 
+                        className="pl-4 pr-4 py-2 border rounded-lg w-full" 
+                        placeholder="Enter your Name" /> 
+                   
               </div>
 
               <div className="relative mb-3"> 
                   <input type="text" 
-                        className="pl-10 pr-4 py-2 border rounded-lg w-full" 
-                        placeholder="Enter your email" /> 
-                  <div className="absolute inset-y-0 left-0 pl-3  
-                              flex items-center  
-                              pointer-events-none"> 
-                      <svg className="h-5 w-5 text-gray-400" 
-                          fill="none" 
-                          stroke="currentColor"> 
-                          <path stroke-linecap="round" 
-                                stroke-linejoin="round" 
-                                stroke-width="2"
-                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"> 
-                            </path> 
-                      </svg> 
-                  </div> 
+                        className="pl-4 pr-4 py-2 border rounded-lg w-full" 
+                        placeholder="Enter your Number" /> 
+                   
               </div> 
 
               <div className="relative mb-3"> 
                   <input type="text" 
-                        className="pl-10 pr-4 py-2 border rounded-lg w-full" 
-                        placeholder="Enter your email" /> 
-                  <div className="absolute inset-y-0 left-0 pl-3  
-                              flex items-center  
-                              pointer-events-none"> 
-                      <svg className="h-5 w-5 text-gray-400" 
-                          fill="none" 
-                          stroke="currentColor"> 
-                          <path stroke-linecap="round" 
-                                stroke-linejoin="round" 
-                                stroke-width="2"
-                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"> 
-                            </path> 
-                      </svg> 
-                  </div> 
+                        className="pl-4 pr-4 py-2 border rounded-lg w-full" 
+                        placeholder="Enter your Email" /> 
+                   
               </div> 
 
               <div className="relative mb-3"> 
                   <textarea 
-                        className="resize-none pl-10 pr-4 py-2 border rounded-lg w-full" rows={5}
-                        placeholder="Enter your message" ></textarea> 
+                        className="resize-none pl-4 pr-4 py-2 border rounded-lg w-full" rows={5}
+                        placeholder="Enter your Message" ></textarea> 
                   <div className="absolute inset-y-0 left-0 pl-3 pt-3 
                               flex items-start  
                               pointer-events-none"> 
-                      <svg className="h-5 w-5 text-gray-400" 
-                          fill="none" 
-                          stroke="currentColor"> 
-                          <path stroke-linecap="round" 
-                                stroke-linejoin="round" 
-                                stroke-width="2"
-                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"> 
-                            </path> 
-                      </svg> 
-                  </div> 
+                                </div> 
               </div>
 
               <button className="p-4 w-full bg-green-500 uppercase text-white rounded font-poppins">Submit</button>
@@ -1087,6 +1078,12 @@ export default function Home()  {
 </section>
 
 <Footer/>
+
+{/* <motion.p className="font-acumin text-5xl text-center text-black leading-loose font-bold hover:text-[#EBFA0B]" ref={nodeRef} >{rounded}<Counter from={100} to={1000} val={"10"} />100</motion.p>
+ */}
+
+
+
     </main>
   );
 }

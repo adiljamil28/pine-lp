@@ -230,8 +230,27 @@ video#background-video {
 
 
 .swiper_wrap{height:100%;width:100%;position:relative;display:block;text-align:left;margin-bottom:50px;}
-.bk-sil.next{margin-top:0px;position:absolute;top:43%;right:-46px;width:45px;height:45px;transform:translateY(-50%);background:#0d0f38;border:none;padding:10px 18px;color:#fff;border-radius:10px;width:5%;font-size:24px;line-height:0.5;}
+.bk-sil.next{margin-top:0px;position:absolute;top:43%;right:-25px;width:45px;height:45px;transform:translateY(-50%);background:#0d0f38;border:none;padding:10px 18px;color:#fff;border-radius:10px;width:5%;font-size:24px;line-height:0.5;}
 .bk-sil.prev{position:absolute;top: 43%;left:-45px;width:45px;height:45px;transform:translateY(-50%);margin-top:0px;background:#0d0f38;border:none;padding:10px 18px;color:#fff;border-radius:10px;width:5%;font-size:24px;line-height:0.5;}
 
-.bk-sil2.next{margin-top:0px;position:absolute;top:43%;right:-46px;width:45px;height:45px;transform:translateY(-50%);background:#0d0f38;border:none;padding:10px 18px;color:#fff;border-radius:10px;width:5%;font-size:24px;line-height:0.5;}
+.bk-sil2.next {
+  margin-top: 0px;
+  position: absolute;
+  top: 43%;
+  right: -36px;
+  width: 45px;
+  height: 45px;
+  transform: translateY(-50%);
+  background: #0d0f38;
+  border: none;
+  padding: 10px 18px;
+  color: #fff;
+  border-radius: 10px;
+  width: 5%;
+  font-size: 24px;
+  line-height: 0.5;
+}
 .bk-sil2.prev{position:absolute;top: 43%;left:-45px;width:45px;height:45px;transform:translateY(-50%);margin-top:0px;background:#0d0f38;border:none;padding:10px 18px;color:#fff;border-radius:10px;width:5%;font-size:24px;line-height:0.5;}
+
+.bnd-slider.swiper-wrapper {
+  text-align: -webkit-center;}
